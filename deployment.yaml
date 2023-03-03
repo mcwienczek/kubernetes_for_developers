@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: registry.cwi.dev/cwi-sample-web-app:v6
+        imagePullPolicy: IfNotPresent
+        # env:
+        #   - name: ENVIRONMENT
+        #     value: production
+        # env:
+        #   - name: DB_PASSWORD
+        #     valueFrom:
+        #       secretKeyRef:
+        #         name: database-password
+        #         key: value
+        #         optional: false
+        ports:
+        - containerPort: 8080
+      #   volumeMounts:
+      #   - name: config
+      #     mountPath: "/usr/src/app/config.json"
+      #     subPath: config.json
+      # volumes:
+      # # You set volumes at the Pod level, then mount them into containers inside that Pod
+      # - name: config
+      #   configMap:
+      #     # Provide the name of the ConfigMap you want to mount.
+      #     name: webapp-config
